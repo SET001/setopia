@@ -1,0 +1,23 @@
+{
+  "name": "002",
+  "version": "0.0.0",
+  "authors": [
+    "SET <settydark@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "lodash": "~3.5.0",
+    "threejs": "*",
+    "angularjs": "~1.4.0",
+    "angular-route": "~1.4.0"
+  }
+}
