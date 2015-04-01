@@ -1,1 +1,1 @@
-sass --watch sass/:css/ & coffee -o js/ -cw app/
+sass --watch sass/:css/ & coffee -o js/app/ -cw app/

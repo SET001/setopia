@@ -1,0 +1,1 @@
+sass sass/:css/ & coffee -o js/app/ -c app/

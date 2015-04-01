@@ -68,6 +68,23 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 						.line 20
 						.go 30, 5, 155
 						.line 20
+					designer
+						.go 130, 0, 150+i*step
+						.lineUp 20
+				for i in [0..15]
+					designer
+						.go 25, 0, 150+i*step
+						.lineUp 20
+				for i in [0..4]
+					designer
+						.go 30, 50, 150+55+i*step
+						.line 40
+				for i in [0..40]
+					designer
+						.go 30+i*step, 0, 150+55+20
+						.lineUp 20
+
+				console.log designer.units.length
 				@addUnits designer.units
 			# designer
 			# 	.go 30, 5, 150
