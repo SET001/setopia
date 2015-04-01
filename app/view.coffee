@@ -1,5 +1,5 @@
-app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','FenceCenter', 'Box'
-, ($rootScope, $q, Config, Controls, Fence, CubeMan, FenceCenter, Box)	->
+app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','FenceCenter', 'Box', 'Designer'
+, ($rootScope, $q, Config, Controls, Fence, CubeMan, FenceCenter, Box, Designer)	->
 	View = 
 		units: []
 		collidables: []
@@ -10,7 +10,7 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 			@renderer.shadowMapEnabled = yes
 			document.body.appendChild @renderer.domElement
 			if Config.enableAxis
-				axes = new THREE.AxisHelper 10
+				axes = new THREE.AxisHelper 1000
 				@scene.add axes
 			@setCamera()
 			@setSky()
@@ -25,6 +25,13 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 			@user.mesh.rotation.y = 0.1
 			@addUnit @user
 
+			window.addEventListener 'resize', =>
+				width = window.innerWidth
+				height = window.innerHeight
+				@renderer.setSize width, height
+				@camera.aspect = width / height
+				@camera.updateProjectionMatrix()
+
 			lineMaterial = new THREE.LineBasicMaterial color: 0x0000ff
 
 			@userRays = []
@@ -35,10 +42,9 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 				line.dynamic = true
 				@userRays.push line
 				@scene.add line
-			console.log "rays", @userRays
 
 			map = [
-				[0, 5, 100]
+				[0, 0, 100]
 				[10, 5, 100]
 				[10, 5, 100]
 				[10, 15, 100]
@@ -48,12 +54,24 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 			]
 			material = new THREE.MeshBasicMaterial color: 0x000000
 			geometry = new THREE.BoxGeometry 5, 5, 5
-
+			
 			for item in map
 				@addUnit new Box ->
 					@mesh.position.x = item[0]
 					@mesh.position.y = item[1]
 					@mesh.position.z = item[2]
+
+			designer = new Designer Box, @scene
+			step = 5
+			for i in [0..10]
+				designer
+					.go 30, i*step, 150+i*step
+					.line 20
+			# console.log designer.cursor.matrix
+			# designer.cursor.rotation.set 1.5, 0, 0
+			# console.log designer.cursor.matrix
+			# designer.line 10
+
 				
 			# material = new THREE.MeshBasicMaterial wireframe: true, color: 0x000000
 			# geometry = new THREE.BoxGeometry 10, 100, 100
@@ -68,6 +86,7 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 			@controls = new Controls @user, @camera
 
 			@addUnit new Fence ->
+				console.log @mesh
 				@mesh.position.set 10, 0, 10
 			@addUnit new FenceCenter ->
 				@mesh.position.set 2, 1.5, 10
@@ -152,9 +171,9 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 
 		addUnit: (unit) ->
 			$q.when(unit.ready).then =>
+				console.log "then view"
 				if unit.collidable
 					@collidables.push unit.mesh
-				console.log "Adding unit #{unit.name}", unit
 				@scene.add unit.mesh
 		removeUnit: (unit) ->
 			@collidables = _.reject @collidables, id: unit.id

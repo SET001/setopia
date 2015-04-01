@@ -7,11 +7,9 @@ app.factory 'Controls', ['$rootScope', ($rootScope)->
 		sy: 0
 		constructor: (unit, camera) ->
 			@clock = new THREE.Clock()
-
 			@sy = 1
 			@unit = unit
 			@camera = camera
-			console.log @unit
 			@keyboard = new THREEx.KeyboardState()
 			document.onmousemove = (e) =>
 				angle = .03
@@ -29,12 +27,12 @@ app.factory 'Controls', ['$rootScope', ($rootScope)->
 				if e.wheelDelta > 0
 					@sy += speed
 				else 
-					if @sy>(-21+speed) then	@sy -= speed
+					# if @sy>(-21+speed) then
+					@sy -= speed
 				@setCamera()
 		setCamera: =>
 			relativeCameraOffset = new THREE.Vector3(50+@sy,20+@sy,0)
 			cameraOffset = relativeCameraOffset.applyMatrix4 @unit.mesh.matrixWorld
-
 			@camera.position.x = cameraOffset.x
 			@camera.position.y = cameraOffset.y
 			@camera.position.z = cameraOffset.z

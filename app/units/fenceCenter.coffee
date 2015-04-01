@@ -1,8 +1,5 @@
-app.factory 'FenceCenter', ['Model', (Model)->
-	class window.FenceCenter extends Model
-		collidable: yes
+app.factory 'FenceCenter', ['ModelCollidable', (ModelCollidable)->
+	class window.FenceCenter extends ModelCollidable
 		path: 'fence2_center.json'
 		name: 'FenceCenter'
-		init: ->
-			@mesh.scale.set(1, 1, 1)
 ]
