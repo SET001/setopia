@@ -29,6 +29,6 @@ app.factory 'Model', ['$q', ($q) ->
 		setup: ->
 			if @customInit 
 				@customInit.call @
-			@defer.resolve()
+			@defer.resolve @
 
 ]

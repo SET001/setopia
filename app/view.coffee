@@ -9,6 +9,12 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 			@renderer.setSize window.innerWidth, window.innerHeight
 			@renderer.shadowMapEnabled = yes
 			document.body.appendChild @renderer.domElement
+			window.addEventListener 'resize', =>
+				width = window.innerWidth
+				height = window.innerHeight
+				@renderer.setSize width, height
+				@camera.aspect = width / height
+				@camera.updateProjectionMatrix()
 			if Config.enableAxis
 				axes = new THREE.AxisHelper 1000
 				@scene.add axes
@@ -25,15 +31,7 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 			@user.mesh.rotation.y = 0.1
 			@addUnit @user
 
-			window.addEventListener 'resize', =>
-				width = window.innerWidth
-				height = window.innerHeight
-				@renderer.setSize width, height
-				@camera.aspect = width / height
-				@camera.updateProjectionMatrix()
-
 			lineMaterial = new THREE.LineBasicMaterial color: 0x0000ff
-
 			@userRays = []
 			for vertex, i in @user.mesh.geometry.vertices
 				lineGeometry = new THREE.Geometry()
@@ -45,12 +43,12 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 
 			map = [
 				[0, 0, 100]
+				[5, 0, 100]
+				[10, 0, 100]
 				[10, 5, 100]
-				[10, 5, 100]
-				[10, 15, 100]
-				[20, 5, 100]
-				[20, 15, 100]
-				[20, 25, 100]
+				[15, 0, 100]
+				[15, 5, 100]
+				[15, 10, 100]
 			]
 			material = new THREE.MeshBasicMaterial color: 0x000000
 			geometry = new THREE.BoxGeometry 5, 5, 5
@@ -61,12 +59,19 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 					@mesh.position.y = item[1]
 					@mesh.position.z = item[2]
 
-			designer = new Designer Box, @scene
-			step = 5
-			for i in [0..10]
-				designer
-					.go 30, i*step, 150+i*step
-					.line 20
+			designer = new Designer Box
+			designer.ready.then =>
+				step = 5
+				for i in [0..10]
+					designer
+						.go 30, i*step, 150+i*step
+						.line 20
+						.go 30, 5, 155
+						.line 20
+				@addUnits designer.units
+			# designer
+			# 	.go 30, 5, 150
+			# 	.line 20
 			# console.log designer.cursor.matrix
 			# designer.cursor.rotation.set 1.5, 0, 0
 			# console.log designer.cursor.matrix
@@ -86,7 +91,6 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 			@controls = new Controls @user, @camera
 
 			@addUnit new Fence ->
-				console.log @mesh
 				@mesh.position.set 10, 0, 10
 			@addUnit new FenceCenter ->
 				@mesh.position.set 2, 1.5, 10
@@ -158,7 +162,7 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 			floorTexture.repeat.set 40, 40
 			floorMaterial = new THREE.MeshLambertMaterial( { map: floorTexture, side: THREE.DoubleSide } )
 			floorMaterial.receiveShadow = yes
-			floorGeometry = new THREE.PlaneGeometry 2560, 2560, 10, 10
+			floorGeometry = new THREE.PlaneBufferGeometry 2560, 2560, 10, 10
 			floor = new THREE.Mesh(floorGeometry, floorMaterial)
 			floor.name = "Floor"
 			floor.receiveShadow = yes
@@ -169,9 +173,11 @@ app.service 'View', ['$rootScope','$q','Config','Controls','Fence','CubeMan','Fe
 				mesh: floor
 				ready: yes
 
+		addUnits: (units) ->
+			for unit in units
+				@addUnit unit
 		addUnit: (unit) ->
 			$q.when(unit.ready).then =>
-				console.log "then view"
 				if unit.collidable
 					@collidables.push unit.mesh
 				@scene.add unit.mesh
