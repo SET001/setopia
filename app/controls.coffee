@@ -1,11 +1,17 @@
 app.factory 'Controls', ['$rootScope', ($rootScope)->
 	class window.Controls
 		oldX: 0
-		pressed: no
 		keyboard: null
 		unit: null
 		sy: 0
 		constructor: (unit, camera) ->
+			havePointerLock = 'pointerLockElement' of document || 'mozPointerLockElement' of document || 'webkitPointerLockElement' of document
+			if havePointerLock
+			else
+				throw new Exception "Your browser doest's dussport Pointer Lock API!"
+			# document.requestPointerLock()
+			console.log havePointerLock
+
 			@clock = new THREE.Clock()
 			@sy = 1
 			@unit = unit
@@ -13,15 +19,16 @@ app.factory 'Controls', ['$rootScope', ($rootScope)->
 			@keyboard = new THREEx.KeyboardState()
 			document.onmousemove = (e) =>
 				angle = .03
-				if @pressed
-					if @oldX > e.x
-						@unit.mesh.rotateOnAxis( new THREE.Vector3(0,1,0), angle)
-					if @oldX < e.x
-						@unit.mesh.rotateOnAxis( new THREE.Vector3(0,1,0), -angle)
-					@oldX = e.x
-					$rootScope.$broadcast 'move'
-			document.onmousedown = (e) =>	@pressed = yes
-			document.onmouseup = (e) =>	@pressed = no
+				# console.log Math.abs @oldX-e.x
+				angle *= (Math.abs @oldX-e.x) / 3
+				if @oldX > e.x
+					@unit.mesh.rotateOnAxis( new THREE.Vector3(0,1,0), angle)
+				if @oldX < e.x
+					@unit.mesh.rotateOnAxis( new THREE.Vector3(0,1,0), -angle)
+				@oldX = e.x
+				$rootScope.$broadcast 'move'
+			document.onmousedown = (e) =>
+			document.onmouseup = (e) =>	
 			document.onmousewheel = (e) =>
 				speed = 4
 				if e.wheelDelta > 0
