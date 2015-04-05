@@ -5,14 +5,26 @@
     <link rel='stylesheet' href='css/style.css' type='text/css' media='all'/>
   </head>
   <body ng-app="app" ng-controller="MainCtrl">
-    
+    <div id="userlist" class="box" ng-show="server.isConnected">
+      <ul>
+        <li ng-repeat="user in server.users">{{user}}</li>
+      </ul>
+      
+    </div>
+    <div id="blocker" ng-show="!controls.enabled">
+      <h1>ThreeJS Sandbox</h1>
+      <div ng-view></div>
+    </div>
   </body>
+
   <script src="js/libs/Detector.js"></script>
-  
+
+  <script src="bower_components/socket.io-client/socket.io.js"></script>
   <script src="bower_components/threejs/build/three.js"></script>
   <script src="bower_components/lodash/lodash.js"></script>
   <script src="bower_components/angularjs/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
   
   <!-- <script src="js/libs/OrbitControls.js"></script> -->
   <script src="js/libs/dat.gui.min.js"></script>
@@ -22,10 +34,15 @@
           
   <!-- <script src="bower_components/jquery/dist/jquery.min.js"></script> -->
   <script src="js/app/app.js"></script>
-  <script src="js/app/controls.js"></script>
-  <script src="js/app/model.js"></script>
-  <script src="js/app/modelCollidable.js"></script>
-  <script src="js/app/designer.js"></script>
+  <script src="js/app/services/controls.js"></script>
+  <script src="js/app/services/model.js"></script>
+  <script src="js/app/services/modelCollidable.js"></script>
+  <script src="js/app/services/designer.js"></script>
+  <script src="js/app/services/world.js"></script>
+  <script src="js/app/services/settings.js"></script>
+  <script src="js/app/services/view.js"></script>
+  <script src="js/app/services/server.js"></script>
+  <script src="js/app/units/floor.js"></script>
   <script src="js/app/units/cubeman.js"></script>
   <script src="js/app/units/tree.js"></script>
   <script src="js/app/units/cow.js"></script>
@@ -33,6 +50,6 @@
   <script src="js/app/units/fence.js"></script>
   <script src="js/app/units/fenceCenter.js"></script>
   <script src="js/app/units/box.js"></script>
-  <script src="js/app/view.js"></script>
   <script src="js/app/controllers/main.js"></script>
+  <script src="js/app/controllers/settings.js"></script>
 </html>
