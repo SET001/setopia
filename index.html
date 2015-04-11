@@ -6,7 +6,9 @@
   </head>
   <body ng-app="app" ng-controller="MainCtrl">
     <div id="userlist" class="box" ng-show="server.isConnected">
-      <ul>
+      <h2>Users ({{server.users.length}}):</h2>
+      <span ng-hide="server.users.length" class="muted">No users online</span>
+      <ul ng-show="server.users.length">
         <li ng-repeat="user in server.users">{{user}}</li>
       </ul>
       
@@ -18,7 +20,7 @@
   </body>
 
   <script src="js/libs/Detector.js"></script>
-
+  
   <script src="bower_components/socket.io-client/socket.io.js"></script>
   <script src="bower_components/threejs/build/three.js"></script>
   <script src="bower_components/lodash/lodash.js"></script>
@@ -42,14 +44,20 @@
   <script src="js/app/services/settings.js"></script>
   <script src="js/app/services/view.js"></script>
   <script src="js/app/services/server.js"></script>
+  <script src="js/app/units/unit.js"></script>
   <script src="js/app/units/floor.js"></script>
   <script src="js/app/units/cubeman.js"></script>
+  <script src="js/app/units/userMan.js"></script>
+  <script src="js/app/units/ratMan.js"></script>
+  <script src="js/app/units/tradeMan.js"></script>
   <script src="js/app/units/tree.js"></script>
   <script src="js/app/units/cow.js"></script>
   <script src="js/app/units/pig.js"></script>
   <script src="js/app/units/fence.js"></script>
   <script src="js/app/units/fenceCenter.js"></script>
   <script src="js/app/units/box.js"></script>
+  <script src="js/app/units/house.js"></script>
+  <script src="js/app/units/ninja.js"></script>
   <script src="js/app/controllers/main.js"></script>
   <script src="js/app/controllers/settings.js"></script>
 </html>

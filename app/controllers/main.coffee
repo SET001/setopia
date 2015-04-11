@@ -17,7 +17,6 @@ app.controller 'MainCtrl', ['$scope', 'Config', 'View', 'Controls', 'Settings', 
 			Server.connect(Settings.get().username).then (params) =>
 				console.log "successfully connected!", params
 				View.loadWorld(params.world).then =>
-					View.initUsers Server.users
 					$scope.ready = yes
 					window.stime -= (new Date()).getTime()
 					console.log "Done in #{(window.stime*-1)/1000} seconds"

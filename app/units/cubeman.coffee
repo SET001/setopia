@@ -1,15 +1,17 @@
 app.factory 'CubeMan', ['$rootScope', '$timeout', ($rootScope, $timeout) ->
 	class window.CubeMan
-		name: 'user'
+		name: 'CubeMan'
+		username: ''
 		height: 5
 		headRadius: 1
 		mesh: null
+		id: null
 		ready: yes
 		collidable: no
-		inJump: no
-		canJump: no
-		constructor: ->
-			material = new THREE.MeshLambertMaterial color: 0xff0000
+		color: 0xeee
+		constructor: (settings) ->
+			_.assign @, settings
+			material = new THREE.MeshLambertMaterial color: @color
 			bodyGeometry = new THREE.BoxGeometry 1, @height, 1
 			@mesh = new THREE.Mesh bodyGeometry, material
 			@mesh.name = "CubeMan body"
@@ -29,24 +31,25 @@ app.factory 'CubeMan', ['$rootScope', '$timeout', ($rootScope, $timeout) ->
 			head = new THREE.Mesh headGeomtry, material
 			head.position.set 0, @height/2, 0
 
+			# textGeo = new THREE.TextGeometry "asdasd",
+			# 	size: 10
+			# 	height: 10
+			# 	# curveSegments: curveSegments
+
+			# 	# font: font,
+			# 	# weight: weight,
+			# 	# style: style,
+
+			# 	# bevelThickness: bevelThickness,
+			# 	# bevelSize: bevelSize,
+			# 	# bevelEnabled: bevelEnabled,
+
+			# 	# material: 0
+			# 	# extrudeMaterial: 1
+			# text = new THREE.Mesh textGeo, material
+			# text.position.y = 2
+
+
+
 			@mesh.add head, leftHand, rightHand
-
-		move: (direction) ->
-			moveDistance = 1
-			switch direction
-				when 'forward' then	@mesh.translateX -moveDistance
-				when 'backward' then @mesh.translateX moveDistance
-				when 'right' then @mesh.translateZ +moveDistance
-				when 'left' then @mesh.translateZ -moveDistance
-				when 'down' 
-					unless @inJump
-						@mesh.translateY -moveDistance
-				when 'up'
-					unless @inJump
-						@inJump = yes
-						$timeout =>
-							@inJump = no
-						, 1000
-					@mesh.translateY moveDistance
-
 ]

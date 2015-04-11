@@ -1,13 +1,11 @@
-app.factory 'Floor', ['$rootScope', '$timeout', ($rootScope, $timeout) ->
-	class window.Floor
+app.factory 'Floor', ['$rootScope', '$timeout', 'Unit', ($rootScope, $timeout, Unit) ->
+	class window.Floor extends Unit
 		name: 'Floor'
-		width: 1000
-		length: 1000
 		mesh: null
 		ready: yes
 		collidable: yes
 		texture: 'grass4.png'
-		constructor: (settings) ->
+		constructor: (settings, customInit = null) ->
 			_.assign @, settings
 			floorTexture = new THREE.ImageUtils.loadTexture "images/#{@texture}"
 			floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping
@@ -20,4 +18,5 @@ app.factory 'Floor', ['$rootScope', '$timeout', ($rootScope, $timeout) ->
 			@mesh.receiveShadow = yes
 			@mesh.position.y = 0
 			@mesh.rotation.x = Math.PI / 2
+			super settings, customInit
 ]
