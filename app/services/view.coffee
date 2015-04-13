@@ -1,9 +1,10 @@
-app.service 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Controls', 'Designer', 'World', 'Server', 'UserMan', 'House', 'Ninja', 'Fence', 'Tree'
-, ($rootScope, $q, $injector, Config, Settings, Controls, Designer, World, Server, UserMan, House, Ninja, Fence, Tree)	->
+app.service 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Controls', 'Designer', 'World', 'Server', 'UserMan', 'House', 'Ninja', 'Fence', 'Tree', 'Floor'
+, ($rootScope, $q, $injector, Config, Settings, Controls, Designer, World, Server, UserMan, House, Ninja, Fence, Tree, Floor)	->
 	View = 
 		users: []
 		units: []
 		collidables: []
+		initialised: no
 		loadWorld: (world) ->
 			defer = $q.defer()
 			for unitInto in world
@@ -22,6 +23,7 @@ app.service 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 			defer.resolve()
 			defer.promise
 		init: ->
+
 			@scene = new THREE.Scene()
 			@renderer = new THREE.WebGLRenderer(antialias: true)
 			@renderer.setSize window.innerWidth, window.innerHeight
@@ -59,7 +61,7 @@ app.service 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 			ninja.ready.then =>
 				ninja.mesh.castShadow = yes
 				ninja.mesh.rotation.y = -1
-				scale = 1.5
+				scale = 3
 				ninja.mesh.scale.x = scale
 				ninja.mesh.scale.y = scale
 				ninja.mesh.scale.z = scale
@@ -82,7 +84,8 @@ app.service 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 			fence3 = new Fence()
 			fence3.ready.then =>
 				# fence.mesh.rotation.y = 0
-				fence3.mesh.position.x = 550+fence3.length
+				console.log fence3.length, fence3.height, fence3.width
+				fence3.mesh.position.x = 550+12
 				fence3.mesh.position.y = 0
 				fence3.mesh.position.z = 160
 				@collidables.push fence3.mesh
@@ -105,6 +108,15 @@ app.service 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 			@user.position.x = 20
 			@user.mesh.rotation.y = 0.1
 			@scene.add @user.mesh
+
+			floor = new Floor
+				width: 10000
+				length: 10000
+			floor.ready.then =>
+				@collidables.push floor.mesh
+				@scene.add floor.mesh
+				@units.push floor
+
 
 
 			$rootScope.$on 'unitRemove', (e, unitInfo) =>
@@ -170,17 +182,17 @@ app.service 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 			# 		user.mesh.position.z = data.position.z
 
 
-			$rootScope.$on 'move', (e, direction) =>
-				switch direction
-					when 'forward' then directionVector = new THREE.Vector3 -100, 0, 0
-					when 'backward' then directionVector = new THREE.Vector3 100, 0, 0
-					when 'left' then directionVector = new THREE.Vector3 0, 0, -100
-					when 'right' then directionVector = new THREE.Vector3 0, 0, 100
-					when 'down' then directionVector = new THREE.Vector3 0, -100, 0
-					when 'up' then directionVector = new THREE.Vector3 0, 100, 0
-				if @isCanGo(@user.mesh, directionVector)
-					@user.move direction
-					Server.sendPosition @user.mesh.position
+			# $rootScope.$on 'move', (e, direction) =>
+			# 	switch direction
+			# 		when 'forward' then directionVector = new THREE.Vector3 -100, 0, 0
+			# 		when 'backward' then directionVector = new THREE.Vector3 100, 0, 0
+			# 		when 'left' then directionVector = new THREE.Vector3 0, 0, -100
+			# 		when 'right' then directionVector = new THREE.Vector3 0, 0, 100
+			# 		when 'down' then directionVector = new THREE.Vector3 0, -100, 0
+			# 		when 'up' then directionVector = new THREE.Vector3 0, 100, 0
+			# 	if @isCanGo(@user.mesh, directionVector)
+			# 		@user.move direction
+			# 		Server.sendPosition @user.mesh.position
 
 			# World.init().then (units) =>
 			# 	console.log units.length
@@ -194,9 +206,6 @@ app.service 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 			# 	defer.resolve()
 			# 	@ready = yes
 					
-
-			Controls.init @user, @camera
-
 			# lineMaterial = new THREE.LineBasicMaterial color: 0x0000ff
 			# @userRays = []
 			# for vertex, i in @user.mesh.geometry.vertices
@@ -228,7 +237,7 @@ app.service 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 			# 	ready: yes
 
 			# @drawRayLines()
-
+			@initialised = yes
 		animate: (t) ->
 			$rootScope.$broadcast 'move', 'down'
 			Controls.update()
@@ -241,16 +250,17 @@ app.service 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 		setCamera: ->
 			@camera = new THREE.PerspectiveCamera 45, window.innerWidth / window.innerHeight, 0.1, 20000
 			@camera.lookAt @scene.position
+
 		setSky: ->
-			skyBoxGeometry = new THREE.SphereGeometry 1280, 100, 100
-			skyBoxTexture = new THREE.ImageUtils.loadTexture 'images/sky3.jpg'
+			skyBoxGeometry = new THREE.SphereGeometry 16280, 100, 100
+			skyBoxTexture = new THREE.ImageUtils.loadTexture 'images/redday.jpg'
 			skyBoxTexture.wrapS = skyBoxTexture.wrapT = THREE.RepeatWrapping
-			skyBoxTexture.repeat.set 8, 8
+			skyBoxTexture.repeat.set 1, 1
 			skyBoxMaterial = new THREE.MeshBasicMaterial map: skyBoxTexture, side: THREE.DoubleSide
 			skyBox = new THREE.Mesh skyBoxGeometry, skyBoxMaterial
 			@scene.add skyBox
 		setLight: ->
-			light = new THREE.DirectionalLight 0xffffff, 1
+			light = new THREE.DirectionalLight 0xff8000, 1
 			# light = new THREE.SpotLight 0xffffff
 			light.castShadow = yes
 			light.position.set(400,400,400)
@@ -268,11 +278,11 @@ app.service 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 			# if unit.collidable
 			@scene.remove unit
 
-		isCanGo: (object, direction) ->
-			collisions = @countCollisions object, direction
-			for name, distance of collisions
-				if distance <1 then return no
-			yes
+		# isCanGo: (object, direction) ->
+		# 	collisions = @countCollisions object, direction
+		# 	for name, distance of collisions
+		# 		if distance <1 then return no
+		# 	yes
 
 		countCollisions: (object, direction) ->
 			unless direction then direction = new THREE.Vector3 -100, 0, 0

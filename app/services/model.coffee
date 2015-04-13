@@ -19,7 +19,6 @@ app.factory 'Model', ['$q', ($q) ->
 				@mesh = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( side: THREE.DoubleSide, shading: @shading) )
 				@mesh.name = @name
 				@mesh.geometry.computeBoundingBox()
-				height = @mesh.geometry.boundingBox.max.y - @mesh.geometry.boundingBox.min.y
 				@mesh.geometry.center()
 				@mesh.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, -@mesh.geometry.boundingBox.min.y, 0))
 
