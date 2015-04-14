@@ -9,7 +9,7 @@ app.factory 'Floor', ['$rootScope', '$timeout', 'Unit', ($rootScope, $timeout, U
 			_.assign @, settings
 			floorTexture = new THREE.ImageUtils.loadTexture "images/#{@texture}"
 			floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping
-			floorTexture.repeat.set 40, 40
+			floorTexture.repeat.set 100, 100
 			floorMaterial = new THREE.MeshLambertMaterial( { map: floorTexture, side: THREE.DoubleSide } )
 			floorMaterial.receiveShadow = yes
 			floorGeometry = new THREE.PlaneBufferGeometry @width, @length, 10, 10

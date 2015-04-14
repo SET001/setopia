@@ -53,17 +53,22 @@ app.service 'Controls', ['$rootScope', ($rootScope)->
 		rotateAngle = Math.PI / 2 * delta   # pi/2 radians (90 degrees) per second
 		directionVector = null
 		if @enabled
+			speed = 1
 			directionVector = new THREE.Vector3()
+			if @keyboard.pressed "shift"
+				speed = 2
 			if @keyboard.pressed "a"
-				directionVector.add new THREE.Vector3 -1, 0, 0
+				directionVector.add new THREE.Vector3 -speed, 0, 0
 			if @keyboard.pressed "d"
-				directionVector.add new THREE.Vector3 1, 0, 0
+				directionVector.add new THREE.Vector3 speed, 0, 0
 			if @keyboard.pressed "w"
-				directionVector.add new THREE.Vector3 0, 0, -1
+				directionVector.add new THREE.Vector3 0, 0, -speed
 			if @keyboard.pressed "s"
-				directionVector.add new THREE.Vector3 0, 0, 1
-			if @keyboard.pressed "ctrl"
-				$rootScope.$broadcast 'move', 'down'
+				directionVector.add new THREE.Vector3 0, 0, speed
+			# if @keyboard.pressed "ctrl"
+			# 	$rootScope.$broadcast 'move', 'down'
+
+			# 	@velocity.x += 1
 			if @keyboard.pressed "space"
 				if @canJump
 					@velocity.y += 3
