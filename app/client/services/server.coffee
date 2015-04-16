@@ -1,4 +1,4 @@
-app.service 'Server', ['$q', '$rootScope', 'Settings', ($q, $rootScope, Settings) ->
+app.service 'Server', ['$q', '$rootScope', 'Settings', 'Config', ($q, $rootScope, Settings, Config) ->
 	isConnected: no
 	users: []
 	con: null
@@ -6,7 +6,7 @@ app.service 'Server', ['$q', '$rootScope', 'Settings', ($q, $rootScope, Settings
 		console.log "connecting...", @
 		connected = $q.defer()
 		if true
-			@con = io.connect '192.168.1.1:8090'
+			@con = io.connect Config.serverAddress
 			@con.emit 'login', username
 
 			@con.on 'connected', (params) =>
