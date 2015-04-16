@@ -1,5 +1,6 @@
-app.controller 'MainCtrl', ['$scope', 'Config', 'View', 'Controls', 'Settings', '$location', 'Server', ($scope, Config, View, Controls, Settings, $location, Server) ->
+app.controller 'MainCtrl', ['$scope', 'Config', 'ControlsTestView', 'Controls', 'Settings', '$location', 'Server', ($scope, Config, View, Controls, Settings, $location, Server) ->
 	unless Settings.get().username then $location.path '/settings'
+	$scope.view = new View()
 
 	$scope.config = Config
 	$scope.controls = Controls
@@ -8,10 +9,10 @@ app.controller 'MainCtrl', ['$scope', 'Config', 'View', 'Controls', 'Settings', 
 	$scope.ready = no
 
 	$scope.play = ->
-		unless	View.initialised
-			View.init()
-			Controls.init View
-			View.animate()
+		unless $scope.view.initialised
+			$scope.view.init()
+			Controls.init $scope.view
+			$scope.view.animate()
 		Controls.enable()
 		$scope.ready = yes
 		# unless Server.isConnected
