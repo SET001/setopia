@@ -1,0 +1,1 @@
+module.exports = class Box extends require './unit'

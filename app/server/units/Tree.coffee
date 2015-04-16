@@ -1,0 +1,1 @@
+module.exports = class Tree extends require './unit'
