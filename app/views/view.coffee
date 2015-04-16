@@ -6,14 +6,14 @@ app.factory 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 		initialised: no
 		loadWorld: (world) ->
 			defer = $q.defer()
-			for unitInto in world
-				if !(unitInto.isPC and unitInto.username is Settings.username)
-					factory = $injector.get unitInto.className
-					unit = new factory unitInto
-					if unitInto.position
-						unit.mesh.position.x = unitInto.position.x
-						unit.mesh.position.y = unitInto.position.y
-						unit.mesh.position.z = unitInto.position.z
+			for unitInfo in world
+				if !(unitInfo.isPC and unitInfo.username is Settings.username)
+					factory = $injector.get unitInfo.className
+					unit = new factory unitInfo
+					if unitInfo.position
+						unit.mesh.position.x = unitInfo.position.x
+						unit.mesh.position.y = unitInfo.position.y
+						unit.mesh.position.z = unitInfo.position.z
 					if unit.collidable
 							@collidables.push unit.mesh
 					@scene.add unit.mesh

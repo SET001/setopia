@@ -1,9 +1,23 @@
-app.factory 'ControlsTestView', ['$rootScope','$q', '$injector', 'View', 'Config', 'Settings', 'Designer', 'UserMan', 'House', 'Ninja', 'Fence', 'Tree', 'Floor'
-, ($rootScope, $q, $injector, View, Config, Settings, Designer, UserMan, House, Ninja, Fence, Tree, Floor)	->
+app.factory 'ControlsTestView', ['$rootScope','$q', '$injector', 'View', 'Config', 'Settings', 'Designer', 'UserMan', 'House', 'Ninja', 'Fence', 'Tree', 'Floor', 'Shack'
+, ($rootScope, $q, $injector, View, Config, Settings, Designer, UserMan, House, Ninja, Fence, Tree, Floor, Shack)	->
 	class ControlsTestView extends View
 		init: ->
 			super()
-		
+			shack = new Shack()
+			shack.ready.then =>
+				shack.mesh.position.x = 500
+				shack.mesh.position.y = 0
+				shack.mesh.position.z = 250
+				scale = 3
+				shack.mesh.scale.x = scale
+				shack.mesh.scale.y = scale
+				shack.mesh.scale.z = scale
+				shack.mesh.rotation.y = 3
+				shack.mesh.receiveShadow = yes
+				shack.mesh.castShadow = yes
+				@collidables.push shack.mesh
+				@scene.add shack.mesh
+				@units.push shack
 			house = new House()
 			house.ready.then =>
 				house.mesh.position.x = 500
@@ -70,12 +84,12 @@ app.factory 'ControlsTestView', ['$rootScope','$q', '$injector', 'View', 'Config
 			@user.mesh.rotation.y = 0.1
 			@scene.add @user.mesh
 
-			floor = new Floor
-				width: 10000
-				length: 10000
-			floor.ready.then =>
-				@collidables.push floor.mesh
-				@scene.add floor.mesh
-				@units.push floor
+			# floor = new Floor
+			# 	width: 10000
+			# 	length: 10000
+			# floor.ready.then =>
+			# 	@collidables.push floor.mesh
+			# 	@scene.add floor.mesh
+			# 	@units.push floor
 	
 ]

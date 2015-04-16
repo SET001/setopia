@@ -5,7 +5,7 @@ app.service 'Server', ['$q', '$rootScope', 'Settings', ($q, $rootScope, Settings
 	connect: (username) ->
 		console.log "connecting...", @
 		connected = $q.defer()
-		if false 
+		if true
 			@con = io.connect '192.168.1.1:8090'
 			@con.emit 'login', username
 
