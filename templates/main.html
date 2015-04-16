@@ -1,4 +1,12 @@
-<div class="box" id="mainMenu">
+<div class="error" ng-show="connectError">Can't reach server!</div>
+<div class="loader" ng-show="loading">
+	<div class="spinner">
+		<div class="dot1"></div>
+		  <div class="dot2"></div>
+	</div>
+	<div class="label">Loading...</div>
+</div>
+<div class="box" id="mainMenu" ng-hide="loading">
   <ul>
     <li><a href ng-click="play()">Play</a></li>
     <li><a href="#settings">Settings</a></li>
