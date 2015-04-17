@@ -18,7 +18,7 @@ app.factory 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 							@collidables.push unit.mesh
 					@scene.add unit.mesh
 					@units.push unit
-			console.log "world loaded", @units
+			console.log "world loaded"
 			defer.resolve()
 			defer.promise
 		init: ->
