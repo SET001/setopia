@@ -1,5 +1,5 @@
-app.factory 'Wood', ['Tree', (Tree) ->
-	class window.Wood
+app.factory 'Forest', ['Tree', (Tree) ->
+	class window.Forest
 		spawn: (count) ->
 			worldWidth = 5000
 			worldLength = 5000

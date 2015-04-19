@@ -1,6 +1,6 @@
-app.factory 'WoodTestView', ['$rootScope','$q', '$injector', 'View', 'Config', 'Settings', 'Wood', 'Floor', 'UserMan'
-, ($rootScope, $q, $injector, View, Config, Settings, Wood, Floor, UserMan)	->
-	class WoodTestView extends View
+app.factory 'ForestTestView', ['$rootScope','$q', '$injector', 'View', 'Config', 'Settings', 'Forest', 'Floor', 'UserMan'
+, ($rootScope, $q, $injector, View, Config, Settings, Forest, Floor, UserMan)	->
+	class ForestTestView extends View
 		init: ->
 			super()
 			@user = new UserMan
@@ -17,8 +17,8 @@ app.factory 'WoodTestView', ['$rootScope','$q', '$injector', 'View', 'Config', '
 				@collidables.push floor.mesh
 				@scene.add floor.mesh
 				@units.push floor
-			wood = new Wood()
-			trees = wood.spawn 1000
+			forest = new Forest()
+			trees = forest.spawn 1000
 			@scene.add trees
 			# @scene.fog = new THREE.Fog 0x050505, 1000, 4000
 			# @scene.fog.color.setHSL( 0.1, 0.5, 0.5 )

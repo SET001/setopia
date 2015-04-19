@@ -1,4 +1,4 @@
-app.controller 'WoodTestCtrl', ['$scope', 'Config', 'WoodTestView', 'Controls', ($scope, Config, View, Controls) ->
+app.controller 'ForestTestCtrl', ['$scope', 'Config', 'ForestTestView', 'Controls', ($scope, Config, View, Controls) ->
 	$scope.view = new View()
 
 	$scope.config = Config
@@ -7,5 +7,5 @@ app.controller 'WoodTestCtrl', ['$scope', 'Config', 'WoodTestView', 'Controls', 
 	Controls.plc.getObject().add $scope.view.user.mesh
 	$scope.view.animate()
 
-	console.log "wood test"
+	console.log "forest test"
 ]

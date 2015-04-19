@@ -13,8 +13,8 @@ window.app = angular.module('app', ['ngRoute', 'ngCookies'])
 		.when '/settings', 
 			controller: 'SettingsCtrl'
 			templateUrl: 'templates/settings.html'
-		.when '/wood', 
-			controller: 'WoodTestCtrl'
+		.when '/forest', 
+			controller: 'ForestTestCtrl'
 			templateUrl: 'templates/main.html'
 		.otherwise redirectTo: '/main'
 ]
