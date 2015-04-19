@@ -29,10 +29,11 @@ app.service 'Controls', ['$rootScope', ($rootScope)->
 
 		@plc = new THREE.PointerLockControls @view.camera
 		@view.scene.add @plc.getObject()
-		@plc.getObject().rotation.y = -0.5
-		@plc.getObject().position.x = 490
+		@plc.getObject().rotation.y = 0
+
+		@plc.getObject().position.x = -390
 		@plc.getObject().position.y = 20
-		@plc.getObject().position.z = 200
+		@plc.getObject().position.z = -100
 		@keyboard = new THREEx.KeyboardState()
 		@
 	enable: ->

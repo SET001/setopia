@@ -27,6 +27,14 @@ app.factory 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 			@renderer = new THREE.WebGLRenderer(antialias: true)
 			@renderer.setSize window.innerWidth, window.innerHeight
 			@renderer.shadowMapEnabled = yes
+			@renderer.shadowMapBias = 0.0039
+			@renderer.shadowMapDarkness = 0.5
+			@renderer.shadowMapWidth = 1024
+			@renderer.shadowMapHeight = 1024
+			@renderer.shadowCameraNear = 3
+			# renderer.shadowCameraFar = camera.far;
+			@renderer.shadowCameraFov = 50
+			@renderer.shadowMapSoft = yes
 			document.body.appendChild @renderer.domElement
 			window.addEventListener 'resize', =>
 				width = window.innerWidth
@@ -185,8 +193,11 @@ app.factory 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 		setLight: ->
 			light = new THREE.DirectionalLight 0xff8000, 1
 			# light = new THREE.SpotLight 0xffffff
+			light.shadowMapWidth = 1024
+			light.shadowMapHeight = 1024
 			light.castShadow = yes
-			light.position.set(400,400,400)
+			light.position.set(1000,1000,1000)
+			light.shadowCameraVisible = true
 			@scene.add light
 			@scene.add new THREE.AmbientLight 0x555555
 		setStats: ->

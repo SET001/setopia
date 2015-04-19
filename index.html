@@ -5,7 +5,7 @@
     <link rel='stylesheet' href='css/style.css' type='text/css' media='all'/>
     <link rel='stylesheet' href='css/spinner.css' type='text/css' media='all'/>
   </head>
-  <body ng-app="app" ng-controller="MainCtrl">
+  <body ng-app="app" ng-controller="appCtrl">
     <div id="userlist" class="box" ng-show="server.isConnected">
       <h2>Users ({{server.users.length}}):</h2>
       <span ng-hide="server.users.length" class="muted">No users online</span>
@@ -47,6 +47,7 @@
   <script src="js/app/client/services/server.js"></script>
   <script src="js/app/client/views/view.js"></script>
   <script src="js/app/client/views/controlsTest.js"></script>
+  <script src="js/app/client/views/woodTest.js"></script>
   <script src="js/app/client/units/unit.js"></script>
   <script src="js/app/client/units/floor.js"></script>
   <script src="js/app/client/units/cubeman.js"></script>
@@ -54,6 +55,7 @@
   <script src="js/app/client/units/ratMan.js"></script>
   <script src="js/app/client/units/tradeMan.js"></script>
   <script src="js/app/client/units/tree.js"></script>
+  <script src="js/app/client/units/wood.js"></script>
   <script src="js/app/client/units/cow.js"></script>
   <script src="js/app/client/units/pig.js"></script>
   <script src="js/app/client/units/fence.js"></script>
@@ -63,5 +65,7 @@
   <script src="js/app/client/units/shack.js"></script>
   <script src="js/app/client/units/ninja.js"></script>
   <script src="js/app/client/controllers/main.js"></script>
+  <script src="js/app/client/controllers/app.js"></script>
   <script src="js/app/client/controllers/settings.js"></script>
+  <script src="js/app/client/controllers/wood.js"></script>
 </html>
