@@ -170,7 +170,7 @@ app.factory 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 			# @drawRayLines()
 			@initialised = yes
 		animate: (t) ->
-			$rootScope.$broadcast 'move', 'down'
+			# $rootScope.$broadcast 'move', 'down'
 			Controls.update()
 			@stats.update()
 			@render()
@@ -197,7 +197,7 @@ app.factory 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 			light.shadowMapHeight = 1024
 			light.castShadow = yes
 			light.position.set(1000,1000,1000)
-			light.shadowCameraVisible = true
+			# light.shadowCameraVisible = true
 			@scene.add light
 			@scene.add new THREE.AmbientLight 0x555555
 		setStats: ->

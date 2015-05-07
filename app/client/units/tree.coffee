@@ -17,10 +17,10 @@ app.factory 'Tree', ['$q', 'Unit', ($q, Unit) ->
 	geometries = []
 
 	proportions =
-		leaves: [40, 150, 25]
-		trees: [7, 20, 4]
-		# leaves: [150]
-		# trees: [20]
+		# leaves: [40, 150, 25]
+		# trees: [7, 20, 4]
+		leaves: [25]
+		trees: [4]
 	for i, k in proportions.trees
 		geometries.push 
 			tree: new THREE.CylinderGeometry i, i, 10*i, 32, 32

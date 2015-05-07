@@ -31,9 +31,9 @@ app.service 'Controls', ['$rootScope', ($rootScope)->
 		@view.scene.add @plc.getObject()
 		@plc.getObject().rotation.y = 0
 
-		@plc.getObject().position.x = -390
-		@plc.getObject().position.y = 20
-		@plc.getObject().position.z = -100
+		@plc.getObject().position.x = 10
+		@plc.getObject().position.y = 10
+		@plc.getObject().position.z = 10
 		@keyboard = new THREEx.KeyboardState()
 		@
 	enable: ->
@@ -55,17 +55,22 @@ app.service 'Controls', ['$rootScope', ($rootScope)->
 		directionVector = null
 		if @enabled
 			speed = 1
+			isMove = no
 			directionVector = new THREE.Vector3()
 			if @keyboard.pressed "shift"
 				speed = 2
 			if @keyboard.pressed "a"
 				directionVector.add new THREE.Vector3 -speed, 0, 0
+				isMove = yes
 			if @keyboard.pressed "d"
 				directionVector.add new THREE.Vector3 speed, 0, 0
+				isMove = yes
 			if @keyboard.pressed "w"
 				directionVector.add new THREE.Vector3 0, 0, -speed
+				isMove = yes
 			if @keyboard.pressed "s"
 				directionVector.add new THREE.Vector3 0, 0, speed
+				isMove = yes
 			# if @keyboard.pressed "ctrl"
 			# 	$rootScope.$broadcast 'move', 'down'
 
@@ -76,9 +81,10 @@ app.service 'Controls', ['$rootScope', ($rootScope)->
 					@canJump = no
 
 			@velocity.y -= 9.8 * delta
-			if directionVector
+			if isMove
 				directionVector.add @velocity
 				@plc.getObject().translateOnAxis directionVector, 1
+				$rootScope.$broadcast 'playerMove', @plc.getObject().position
 			if @plc.getObject().position.y < 15
 				@velocity.y = 0
 				@canJump = yes
