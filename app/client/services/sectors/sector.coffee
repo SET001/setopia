@@ -13,10 +13,10 @@ app.factory 'Sector', (Config)->
 			@x = x
 			@y = y
 		getArea: ->
-			x1:	@x*Config.sector.width
-			y1:	@y*Config.sector.length
-			x2: (@x+1)*Config.sector.width
-			y2: (@y+1)*Config.sector.length
+			x1:	-Config.sector.width/2+@x*Config.sector.width
+			y1:	-Config.sector.length/2+@y*Config.sector.length
+			x2: Config.sector.width/2+@x*Config.sector.width
+			y2: Config.sector.width/2+@y*Config.sector.length
 		near: (direction) ->
 			x: (@x + direction.x)+Math.pow(0, @x + direction.x)
 			y: (@y + direction.y)+Math.pow(0, @y + direction.y)

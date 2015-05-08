@@ -9,7 +9,7 @@ app.factory 'ForestTestView', ($rootScope, $q, $injector, View, Config, Settings
 				@collidables.push floor.mesh
 				@scene.add floor.mesh
 				@units.push floor
-			@scene.add new SectorGrid Config.sector.width, 3
+			@scene.add new SectorGrid Config.sector.width, 333
 			# @scene.fog = new THREE.Fog 0x050505, 1000, 4000
 			# @scene.fog.color.setHSL( 0.1, 0.5, 0.5 )
 			# @renderer.setClearColor( @scene.fog.color )

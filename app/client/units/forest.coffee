@@ -7,10 +7,10 @@ app.service 'Forest', ['Tree', (Tree) ->
 			tree = new Tree()
 			x = area.x2-area.x1
 			y = area.y2-area.y1
-			# tree.mesh.position.x = Math.random()*x+area.x1
-			# tree.mesh.position.z = Math.random()*y+area.y1
-			tree.mesh.position.x = area.x1+x/2
-			tree.mesh.position.z = area.y1+y/2
+			tree.mesh.position.x = Math.random()*x+area.x1
+			tree.mesh.position.z = Math.random()*y+area.y1
+			# tree.mesh.position.x = area.x1+x/2
+			# tree.mesh.position.z = area.y1+y/2
 			trees.add tree.mesh
 		trees
 ]

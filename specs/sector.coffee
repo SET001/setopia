@@ -10,14 +10,27 @@ describe "Sector", ->
 	it "should run", ->
 		expect(1).toBe 1
 	it "constructor should create new object", ->
-		sector = new Sector new THREE.Vector3 0, 0, 0
+		sector = new Sector 0, 0
 		expect(sector.units.length).toBe 0
 		sector.units.push "asdasd"
-		sector = new Sector new THREE.Vector3 0, 0, 0
+		sector = new Sector 0, 0
 		expect(sector.units.length).toBe 0
 
-		
-	describe "`.at`", ->
+	describe "getArea", ->
+		it 'should return sector area', ->
+			sector = new Sector 0, 0
+			expect(sector.getArea().x1).toBe -Config.sector.width/2
+			expect(sector.getArea().y1).toBe -Config.sector.length/2
+			expect(sector.getArea().x2).toBe Config.sector.width/2
+			expect(sector.getArea().x2).toBe Config.sector.length/2
+
+			sector = new Sector 1, 1
+			expect(sector.getArea().x1).toBe 50
+			expect(sector.getArea().y1).toBe 50
+			expect(sector.getArea().x2).toBe 150
+			expect(sector.getArea().x2).toBe 150
+
+	describe "at", ->
 		it 'should return correct position structure', ->
 			sectorPos = Sector.at new THREE.Vector3 0, 0, 0
 			expect(typeof(sectorPos)).toBe 'object'
