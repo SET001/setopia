@@ -9,6 +9,13 @@ describe "Sector", ->
 
 	it "should run", ->
 		expect(1).toBe 1
+	it "constructor should create new object", ->
+		sector = new Sector new THREE.Vector3 0, 0, 0
+		expect(sector.units.length).toBe 0
+		sector.units.push "asdasd"
+		sector = new Sector new THREE.Vector3 0, 0, 0
+		expect(sector.units.length).toBe 0
+
 		
 	describe "`.at`", ->
 		it 'should return correct position structure', ->

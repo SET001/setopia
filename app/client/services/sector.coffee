@@ -9,6 +9,7 @@ app.factory 'Sector', (Config)->
 			new  THREE.Vector2 x, y
 		units: []
 		constructor: (x=0, y=0) ->
+			@units = []
 			@x = x
 			@y = y
 		getArea: ->

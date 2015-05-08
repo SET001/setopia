@@ -24,6 +24,7 @@ module.exports = (config) ->
         "app/client/units/forest.coffee"
         "app/client/services/sector.coffee"
         "app/client/services/basicSectorSpawner.coffee"
+        "app/client/services/forestSectorSpawner.coffee"
         "app/client/services/sectorsManager.coffee"
         "specs/sector.coffee"
         "specs/sectorsManager.coffee"

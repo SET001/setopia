@@ -10,7 +10,7 @@ app.factory 'ForestTestView', ['$rootScope','$q', '$injector', 'View', 'Config',
 				@collidables.push floor.mesh
 				@scene.add floor.mesh
 				@units.push floor
-			@initSectorGrid 100, 100
+			@initSectorGrid 2, 2
 			# @scene.fog = new THREE.Fog 0x050505, 1000, 4000
 			# @scene.fog.color.setHSL( 0.1, 0.5, 0.5 )
 			# @renderer.setClearColor( @scene.fog.color )
@@ -19,7 +19,7 @@ app.factory 'ForestTestView', ['$rootScope','$q', '$injector', 'View', 'Config',
 			length = Config.sector.length
 			material = new THREE.LineBasicMaterial color: 0xffffff
 			x = -parseInt(sizex/2)*width
-			y = 0.5
+			y = 0.1
 			z = -parseInt(sizey/2)*length
 			for i in [0..sizex]
 				g = new THREE.Geometry()
