@@ -43,18 +43,17 @@ app.factory 'Tree', ['$q', 'Unit', ($q, Unit) ->
 			@mesh.matrixAutoUpdate = yes
 			# @mesh.updateMatrix()
 			
-			h = Math.random()*20+2
-			leaves = new THREE.Mesh geometry.leaves, leavesMaterial
-			leaves.castShadow = true
-			leaves.receiveShadow = true
-			leaves.position.y = @height-h
+			# h = Math.random()*20+2
+			# leaves = new THREE.Mesh geometry.leaves, leavesMaterial
+			# leaves.castShadow = true
+			# leaves.receiveShadow = true
+			# leaves.position.y = @height-h
 			
-			leavesBottom = new THREE.Mesh geometry.leavesBottom, leavesMaterial
-			leavesBottom.position.y = @height-h
-			leavesBottom.rotation.x = THREE.Math.degToRad 90
-			# leavesBottom.rotation.x = 244.64536456131407
+			# leavesBottom = new THREE.Mesh geometry.leavesBottom, leavesMaterial
+			# leavesBottom.position.y = @height-h
+			# leavesBottom.rotation.x = THREE.Math.degToRad 90
 
-			@mesh.add leaves, leavesBottom
+			# @mesh.add leaves, leavesBottom
 			super settings, customInit
 		getRandomGeometry: () ->
 			index = parseInt(Math.random()*geometries.length);

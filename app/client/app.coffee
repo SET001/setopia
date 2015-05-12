@@ -3,8 +3,8 @@ window.app = angular.module('app', ['ngRoute', 'ngCookies'])
 	enableAxis: yes
 	serverAddress: '127.0.0.1:8090'
 	sector:
-		width: 100
-		length: 100
+		width: 1000
+		length: 1000
 .config ['$routeProvider', ($routeProvider) ->
 	window.stime = (new Date()).getTime()
 
@@ -17,6 +17,9 @@ window.app = angular.module('app', ['ngRoute', 'ngCookies'])
 			templateUrl: 'templates/settings.html'
 		.when '/forest', 
 			controller: 'ForestTestCtrl'
+			templateUrl: 'templates/main.html'
+		.when '/grass', 
+			controller: 'GrassTestCtrl'
 			templateUrl: 'templates/main.html'
 		.otherwise redirectTo: '/main'
 ]

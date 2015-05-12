@@ -1,7 +1,7 @@
 app.controller 'ForestTestCtrl', ($scope, Config, ForestTestView, Controls, Player, Sector, CubeMan, SectorsManager, ForestSectorSpawner) ->
 
 	$scope.refreshSectors = ->
-		sectors = $scope.sectors.spawnNears sectorPos
+		sectors = $scope.sectors.spawnNears sectorPos, 2
 		console.log "created #{sectors.length} sectors", sectors
 		for sector in sectors
 			console.log "sector with #{sector.units.length}, sector.units"
@@ -9,7 +9,7 @@ app.controller 'ForestTestCtrl', ($scope, Config, ForestTestView, Controls, Play
 				$scope.view.scene.add unit
 		$scope.player.sector = $scope.sectors.get sectorPos
 
-		
+
 	$scope.view = new ForestTestView()
 	$scope.config = Config
 	$scope.view.init()

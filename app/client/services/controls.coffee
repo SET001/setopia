@@ -32,7 +32,7 @@ app.service 'Controls', ['$rootScope', ($rootScope)->
 		@plc.getObject().rotation.y = 0
 
 		@plc.getObject().position.x = 10
-		@plc.getObject().position.y = 10
+		@plc.getObject().position.y = 1
 		@plc.getObject().position.z = 10
 		@keyboard = new THREEx.KeyboardState()
 		@
@@ -54,11 +54,11 @@ app.service 'Controls', ['$rootScope', ($rootScope)->
 		rotateAngle = Math.PI / 2 * delta   # pi/2 radians (90 degrees) per second
 		directionVector = null
 		if @enabled
-			speed = 1
+			speed = 0.5
 			isMove = no
 			directionVector = new THREE.Vector3()
 			if @keyboard.pressed "shift"
-				speed = 2
+				speed = 1
 			if @keyboard.pressed "a"
 				directionVector.add new THREE.Vector3 -speed, 0, 0
 				isMove = yes
@@ -85,10 +85,10 @@ app.service 'Controls', ['$rootScope', ($rootScope)->
 				directionVector.add @velocity
 				@plc.getObject().translateOnAxis directionVector, 1
 				$rootScope.$broadcast 'playerMove', @plc.getObject().position
-			if @plc.getObject().position.y < 15
+			if @plc.getObject().position.y < 1
 				@velocity.y = 0
 				@canJump = yes
-				@plc.getObject().position.y = 15
+				@plc.getObject().position.y = 1
 				# @plc.getObject().translateZ -1
 				# object = @plc.getObject()
 				# vertex = object.position()

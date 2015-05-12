@@ -47,8 +47,10 @@ app.factory 'View', ['$rootScope','$q', '$injector', 'Config', 'Settings', 'Cont
 				@scene.add axes
 			@setCamera()
 			@setSky()
+			@scene.fog	= new THREE.FogExp2( 0xd0e0f0, 0.0025 )
 			@setLight()
 			@setStats()
+
 
 			$rootScope.$on 'unitRemove', (e, unitInfo) =>
 				console.log "removing unit", unitInfo, @units
