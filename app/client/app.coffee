@@ -21,5 +21,9 @@ window.app = angular.module('app', ['ngRoute', 'ngCookies'])
 		.when '/grass', 
 			controller: 'GrassTestCtrl'
 			templateUrl: 'templates/main.html'
+		.when '/hills', 
+			controller: 'HillsTestCtrl'
+			templateUrl: 'templates/main.html'
+
 		.otherwise redirectTo: '/main'
 ]

@@ -24,12 +24,6 @@ describe "Sector", ->
 			expect(sector.getArea().x2).toBe Config.sector.width/2
 			expect(sector.getArea().x2).toBe Config.sector.length/2
 
-			sector = new Sector 1, 1
-			expect(sector.getArea().x1).toBe 50
-			expect(sector.getArea().y1).toBe 50
-			expect(sector.getArea().x2).toBe 150
-			expect(sector.getArea().x2).toBe 150
-
 	describe "at", ->
 		it 'should return correct position structure', ->
 			sectorPos = Sector.at new THREE.Vector3 0, 0, 0

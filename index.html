@@ -19,7 +19,8 @@
       <div ng-view></div>
     </div>
   </body>
-
+  <canvas id="canvas" style="display: none"></canvas>
+  <img src="images/threejs_heightmap.png" alt="" id="landscape-image" style="display: none">
   <script src="js/libs/Detector.js"></script>
   
   <script src="bower_components/socket.io-client/socket.io.js"></script>
@@ -56,6 +57,7 @@
   <script src="js/app/client/views/controlsTest.js"></script>
   <script src="js/app/client/views/forestTest.js"></script>
   <script src="js/app/client/views/grassTest.js"></script>
+  <script src="js/app/client/views/hillsTest.js"></script>
   <script src="js/app/client/units/unit.js"></script>
   <script src="js/app/client/units/floor.js"></script>
   <script src="js/app/client/units/cubeman.js"></script>
@@ -77,4 +79,5 @@
   <script src="js/app/client/controllers/settings.js"></script>
   <script src="js/app/client/controllers/forest.js"></script>
   <script src="js/app/client/controllers/grass.js"></script>
+  <script src="js/app/client/controllers/hills.js"></script>
 </html>
