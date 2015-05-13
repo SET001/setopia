@@ -58,7 +58,7 @@ app.service 'Controls', ['$rootScope', ($rootScope)->
 			isMove = no
 			directionVector = new THREE.Vector3()
 			if @keyboard.pressed "shift"
-				speed = 1
+				speed = 3
 			if @keyboard.pressed "a"
 				directionVector.add new THREE.Vector3 -speed, 0, 0
 				isMove = yes

@@ -5,7 +5,7 @@ app.service 'Server', ['$q', '$rootScope', 'Settings', 'Config', ($q, $rootScope
 	connect: (username) ->
 		console.log "connecting...", @
 		connected = $q.defer()
-		if true
+		if false
 			@con = io.connect Config.serverAddress
 			@con.on 'connect_error', (error) =>
 				connected.reject()

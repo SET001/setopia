@@ -7,6 +7,7 @@ app.factory 'HillsTestView', (View, Config, Settings, Floor)	->
 			light.castShadow = yes
 			light.position.set 50,100,50
 			@scene.add light
+			@scene.add new THREE.AmbientLight 0x555555
 		init: ->
 			super()
 			img = document.getElementById("landscape-image")
@@ -16,22 +17,26 @@ app.factory 'HillsTestView', (View, Config, Settings, Floor)	->
 			canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height)
 
 			data = canvas.getContext('2d').getImageData(0,0, img.height, img.width).data
+			console.log "data length: #{data.length}"
 
-			geometry = new THREE.PlaneGeometry 1000, 1000, 249, 249
-			j = 0
-			for i in [0..geometry.vertices.length-1]
-				geometry.vertices[i].z = -(data[j]/10)
-				j += 4
+			console.log "Creating surface plane..."
+			geometry = new THREE.PlaneGeometry 5000, 5000, 500, 500
+			console.log "Done with #{geometry.vertices.length} vertices"
 
+			# j = 0
+			# for i in [0..geometry.vertices.length-1]
+			# 	geometry.vertices[i].z = (data[j])
+			# 	j += 4
 			geometry.computeFaceNormals()
 			geometry.computeVertexNormals()
+			console.log "vertices/faces normalised"
 
-			floorTexture = new THREE.ImageUtils.loadTexture "images/grasslight-small.jpg"
-			floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping
-			floorTexture.repeat.set 50, 50
+			grassTexture = new THREE.ImageUtils.loadTexture "images/grasslight-small.jpg"
+			grassTexture.wrapS = grassTexture.wrapT = THREE.RepeatWrapping
+			grassTexture.repeat.set 50, 50
 			material = new THREE.MeshLambertMaterial
 				color: 0x00ff00
-				map: floorTexture
+				map: grassTexture
 				# side: THREE.DoubleSide
 				# wireframe: yes
 
@@ -41,10 +46,16 @@ app.factory 'HillsTestView', (View, Config, Settings, Floor)	->
 			surface.matrixAutoUpdate = yes
 			surface.rotation.x = THREE.Math.degToRad 90
 			surface.rotation.y = THREE.Math.degToRad 180
-			surface.position.y = - 5
+			surface.position.y = -100
 			@scene.add surface
 
-			g = new THREE.CylinderGeometry 10, 10, 10, 32, 32
-			mesh = new THREE.Mesh g, material
-			mesh.position.set 0, 0, -20
-			@scene.add mesh
+			waterG = new THREE.PlaneBufferGeometry 5000, 5000
+			waterM = new THREE.MeshBasicMaterial
+				opacity:0.40
+				color: 0x0000ff
+				transparent: yes
+			water = new THREE.Mesh waterG, waterM
+			water.rotation.x = THREE.Math.degToRad 90
+			water.rotation.y = THREE.Math.degToRad 180
+			water.position.y = -70
+			@scene.add water
